@@ -1,119 +1,117 @@
 // CODE here for your Lambda Classes
 
 class Person {
-  constructor(name, location, age, gender) {
-      this.name = name;
-      this.location = location;
-      this.age = age;
-      this.gender = gender;
+  constructor(props) {
+    this.name = props.name;
+    this.age = props.age;
+    this.location = props.location;
+    this.gender = props.gender;
   }
   speak() {
-      return `Hello my name is ${this.name}, I am from ${this.location}`
+    console.log(`Hello my name is ${this.name}, I am from ${this.location}`);
   }
 }
+
 class Instructor extends Person {
-  constructor(name, location, age, gender, favLanguage, speciality, catchPhrase) {
-      super(name, location, age, gender);
-      this.speciality = speciality;
-      this.favLanguage = favLanguage;
-      this.catchPhrase = catchPhrase;
+  constructor(props) {
+    super(props);
+    this.specialty = props.specialty;
+    this.favLanguage = props.favLanguage;
+    this.catchPhrase = props.catchPhrase;
   }
 
   demo(subject) {
-      return `Today we are learning about ${subject}`
+    console.log(`Today we are learning about ${subject}`);
   }
 
-  grade(studentObj, subject) {
-      return `${studentObj.name} receives a perfect score on ${subject}`
+  grade(student, subject) {
+    console.log(`${student.name} receives a perfect score on ${subject}`);
   }
-}
+} // Instructor
+
 
 class Student extends Person {
-  constructor(name, location, age, gender, previousBackground, className, favSubjects, grade) {
-      super(name, location, age, gender);
-      this.previousBackground = previousBackground;
-      this.className = className;
-      this.favSubjects = favSubjects;
-      this.grade = 100;
+  constructor(props) {
+    super(props);
+    this.previousBackground = props.previousBackground;
+    this.className = props.className;
+    this.favSubjects = props.favSubjects;
   }
 
-  randomMethod() {
-      let res = this.grade - Math.floor((Math.random() * Math.floor(Math.random() * 100)));
-      return `${res}`;
+  listsSubjects() {
+    for (let i = 0; i < this.favSubjects.length; i++) {
+      console.log(`${this.name} <3's ${this.favSubjects[i]}`);
+    }
   }
 
-  graduateMethod(randomMethod) {
-      let str = "";
-      if (randomMethod >= 70) {
-          str = "success, you will graduate";
-      } else {
-          str = "You have to try again";
-      }
-      return str;
+  PRAssignment(subject) {
+    console.log(`${this.name} submitted a PR for ${subject}`);
   }
 
-  listsSubjects(favSubjects) {
-      for (let i = 0; i < favSubjects.length; i++) {
-          console.log(favSubjects[i]);
-      }
-  }
-
-  PRAssignments(subject) {
-      return `${this.name} has submitted a PR for ${subject}`
-  }
-
-  sprintChallenge() {
-      return `${this.name} has begun sprint challenge on ${this.subject}`
+  sprintChallenge(subject) {
+    console.log(`${this.name} begins working hard on ${subject}`);
   }
 }
 
 class ProjectManager extends Instructor {
-  constructor(name, age, location, gender, speciality, favLanguage, catchPhrase, gradeClassName, favInstructor) {
-      super(name, age, location, gender, speciality, favLanguage, catchPhrase);
-      this.gradeClassName = gradeClassName;
-      this.favInstructor = favInstructor;
-
+  constructor(props) {
+    super(props);
+    this.gradClassName = props.gradClassName;
+    this.favInstructor = props.favInstructor;
   }
 
   standUp(channel) {
-      return `${this.name} announces to ${channel}, @channel standy times!​​​​​`
+    console.log(`${this.name} announces to ${channel}, @channel standy times!`);
   }
 
-  debugsCode(stdObject, subject) {
-      return `${stdObject.name} debugs ${this.name}'s code on ${subject}`
-
+  debugsCode(student, subject) {
+    console.log(`${this.name} debugs ${student.name}'s code on ${subject}`);
   }
 }
 
+const fred = new Instructor({
+  name: 'Fred',
+  location: 'Bedrock',
+  age: 37,
+  gender: 'male',
+  favLanguage: 'JavaScript',
+  specialty: 'Front-end',
+  catchPhrase: `Don't forget the homies`
+});
 
+const bill = new ProjectManager({
+  name: 'Bill',
+  location: 'Michigan',
+  age: 32,
+  gender: 'female',
+  gradClassName: 'CS1',
+  favInstructor: 'Luis',
+  favLanguage: 'JavaScript',
+  specialty: 'Auth',
+  catchPhrase: 'Redux Rocks!'
+});
 
+const figg = new Student({
+  name: 'Figgy',
+  location: 'Charleston',
+  age: 37,
+  gender: 'male',
+  previousBackground: 'Fork Lift Operator',
+  className: 'CS11',
+  favSubjects: ['Html', 'CSS', 'JavaScript']
+});
 
+fred.speak();
+fred.demo('variables');
+fred.grade(figg, 'redux');
 
-const person = new Person("Carlos", "NewJersey", 989, "M")
-console.log(person.speak());
+figg.speak();
+figg.listsSubjects();
+figg.PRAssignment('Redux');
+figg.sprintChallenge('Pre-proccessing');
 
-const instructor = new Instructor("Patric", "South Carolina", 989, "M", "JavaScript", "Front-end", "Don't forget the homies");
-console.log(instructor.speak());
-console.log(instructor.demo("Math"));
-console.log(instructor.grade(new Student("Charles", "NY", 100, "M", "JavaScript", "Front-end"), "Don't forget the homies"));
-
-let favSbubjectArray = ["Music", "Recess", "Art", "Lunch", "AfterSchool"];
-const student = new Student("Jasmine", "Kentucky", 989, "F", "JavaScript", "Back-end", favSbubjectArray);
-student.listsSubjects(favSbubjectArray);
-console.log(student.PRAssignments("AfterSchool"));
-console.log(student.sprintChallenge());
-console.log(student.speak());
-
-let projectManager = new ProjectManager("Dr.Seuss", 200, "Venus", "M", "CSS",
-    "There's a wocket in my pocket", "html language", "HMM!");
-console.log(projectManager.demo("html language"));
-console.log(projectManager.grade(new Student("Eagle", "tree", 600, "M", "python", "AfterSchool", favSbubjectArray), "AfterSchool"));
-console.log(projectManager.standUp("webpt6"));
-console.log(projectManager.debugsCode(new Student("Brian", "Rusia", 1200, "M", "python", "AfterSchool", favSbubjectArray), "AfterSchool"));
-
-console.log("Stretched\n", "Stretches");
-
-let std2 = new Student("Peper", "Tomatos", 300, "M", "Art", "Drawing Bunnies");
-res = std2.randomMethod();
-console.log("Your current automatic grade is " + res);
-console.log(std2.graduateMethod(res));
+bill.speak();
+bill.demo('Redux');
+bill.grade(figg, 'const vs let');
+bill.debugsCode(figg, 'DS-Algos');
+bill.standUp('#Code-Allstars');
